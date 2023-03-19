@@ -1,0 +1,32 @@
+Package: lessTest
+Type: Package
+Title: Tests functions in lessSEM
+Version: 1.4.6
+Authors@R: c(person(given   = "Jannik H.", family = "Orzek",
+                    role    = c("aut", "cre", "cph"),
+                    email   = "orzek@mpib-berlin.mpg.de",
+                    comment = c(ORCID = "0000-0002-3123-2248")))
+Maintainer: Jannik H. Orzek <orzek@mpib-berlin.mpg.de>
+Description: Provides tests for functions implemented in lessSEM
+License: GPL (>= 2)
+Encoding: UTF-8
+RoxygenNote: 7.2.3
+Roxygen: list(markdown = TRUE)
+Depends: lessSEM
+Imports:
+    lavaan,
+    knitr,
+    plotly,
+    rmarkdown,
+    Rsolnp,
+    testthat,
+    glmnet,
+    ncvreg,
+    regsem,
+    lslx,
+    mvtnorm,
+    Matrix,
+    OpenMx,
+    ctsemOMX
+URL: https://github.com/jhorzek/lessTest
+BugReports: https://github.com/jhorzek/lessTest/issues

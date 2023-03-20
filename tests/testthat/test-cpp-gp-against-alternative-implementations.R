@@ -1,8 +1,4 @@
 test_that("testing C++ general purpose optimization", {
-  testthat::skip_on_cran()
-  testthat::skip_if_not_installed("Rcpp")
-  testthat::skip_if_not_installed("glmnet")
-  testthat::skip_if_not_installed("ncvreg")
   library(Rcpp)
   
   linreg <- '

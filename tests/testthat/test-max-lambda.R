@@ -1,5 +1,4 @@
 test_that("testing maxLambda", {
-  testthat::skip_on_cran()
   library(regsem)
   library(lessSEM)
   set.seed(123)

@@ -1,5 +1,4 @@
 test_that("testing gradients", {
-  testthat::skip_on_cran()
   library(lavaan)
   library(lessSEM)
   

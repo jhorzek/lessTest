@@ -1,5 +1,4 @@
 test_that("testing scad", {
-  testthat::skip_on_cran()
   library(lessSEM)
   set.seed(123)
   N <- 50

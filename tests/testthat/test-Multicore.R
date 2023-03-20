@@ -1,5 +1,4 @@
 test_that("Multicore works", {
-  testthat::skip_on_cran()
   library(lessSEM)
   
   set.seed(123)

@@ -1,5 +1,4 @@
 test_that("testing lavaan", {
-  testthat::skip_on_cran()
   library(lavaan)
   library(lessSEM)
   model1 <- ' 

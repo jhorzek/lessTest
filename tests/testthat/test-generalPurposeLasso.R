@@ -1,5 +1,4 @@
 test_that("testing general purpose ista lasso", {
-  testthat::skip_on_cran()
   library(lessSEM)
   set.seed(123)
   n <- 100

@@ -1,6 +1,4 @@
 test_that("testing automatic standardization for cross-validation", {
-  testthat::skip_on_cran()
-  testthat::skip_if_not_installed("regsem")
   library(regsem)
   library(lessSEM)
   set.seed(123)

@@ -1,5 +1,4 @@
 test_that("testing noDotDotDot", {
-  testthat::skip_on_cran()
   library(lessSEM)
   
   # test function that only takes one argument

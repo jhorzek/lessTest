@@ -1,6 +1,4 @@
 test_that("multiplication works", {
-  testthat::skip_on_cran()
-  testthat::skip_if_not_installed("lslx")
   library(lslx)
   library(lessSEM)
   set.seed(123)

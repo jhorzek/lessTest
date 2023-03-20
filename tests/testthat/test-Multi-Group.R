@@ -1,5 +1,4 @@
 test_that("testing multi-group SEM", {
-  testthat::skip_on_cran()
   library(lessSEM)
   set.seed(123)
   # Shortened example from https://lavaan.ugent.be/tutorial/groups.html

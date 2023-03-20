@@ -1,5 +1,4 @@
 test_that("unidentified works", {
-  testthat::skip_on_cran()
   set.seed(123)
   library(lessSEM)
   

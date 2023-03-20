@@ -1,5 +1,4 @@
 test_that("testing mixed penalty - 2", {
-  testthat::skip_on_cran()
   
   library(lessSEM)
   set.seed(123)

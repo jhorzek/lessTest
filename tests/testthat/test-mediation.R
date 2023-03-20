@@ -1,5 +1,4 @@
 test_that("testing mediation model", {
-  testthat::skip_on_cran()
   library(lavaan) 
   library(lessSEM)
   N <- 100

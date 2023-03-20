@@ -1,5 +1,4 @@
 test_that("testing penalty interfaces", {
-  testthat::skip_on_cran()
   library(lavaan)
   library(lessSEM)
   set.seed(123)

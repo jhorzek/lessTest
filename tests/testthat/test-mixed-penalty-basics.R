@@ -24,11 +24,9 @@ test_that("testing mixedPenalty-basic", {
   # fit regularizedSEM
   lambdas <- seq(0,1,length.out=5)
   regularized = paste0("f=~y",6:ncol(y))
-  rsemIsta <- lasso(lavaanModel = modelFit, 
-                    regularized = regularized, 
-                    lambdas = lambdas,
-                    method = "ista",
-                    control = controlIsta()
+  rsem <- lasso(lavaanModel = modelFit, 
+                regularized = regularized, 
+                lambdas = lambdas
   )
   
   # fit with mixedPenalty
@@ -37,15 +35,24 @@ test_that("testing mixedPenalty-basic", {
              lambdas = lambdas) |>
     fit()
   
-  testthat::expect_equal(all(abs(rsemIsta@parameters[,rsemIsta@regularized] - mixed@parameters[,rsemIsta@regularized]) < .002), TRUE)
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
   coef(mixed, criterion = "AIC")
   coef(mixed, criterion = "BIC")
   
+  # fit with mixedPenalty
+  mixed <- mixedPenalty(modelFit,
+                        method = "ista", 
+                        control = controlIsta()) |>
+    addLasso(regularized = regularized,
+             lambdas = lambdas) |>
+    fit()
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
+  
   # fit regularizedSEM
-  rsemIsta <- cappedL1(lavaanModel = modelFit, 
-                       regularized = regularized, 
-                       lambdas = lambdas,
-                       thetas = .2
+  rsem <- cappedL1(lavaanModel = modelFit, 
+                   regularized = regularized, 
+                   lambdas = lambdas,
+                   thetas = .2
   )
   
   # fit with mixedPenalty
@@ -55,15 +62,26 @@ test_that("testing mixedPenalty-basic", {
                 thetas = .2) |>
     fit()
   
-  testthat::expect_equal(all(abs(rsemIsta@parameters[,rsemIsta@regularized] - mixed@parameters[,rsemIsta@regularized]) < .002), TRUE)
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
   coef(mixed, criterion = "AIC")
   coef(mixed, criterion = "BIC")
   
+  # fit with mixedPenalty
+  mixed <- mixedPenalty(modelFit,
+                        method = "ista", 
+                        control = controlIsta()) |>
+    addCappedL1(regularized = regularized,
+                lambdas = lambdas,
+                thetas = .2) |>
+    fit()
+  
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
+  
   # fit regularizedSEM
-  rsemIsta <- lsp(lavaanModel = modelFit, 
-                  regularized = regularized, 
-                  lambdas = lambdas,
-                  thetas = .2
+  rsem <- lsp(lavaanModel = modelFit, 
+              regularized = regularized, 
+              lambdas = lambdas,
+              thetas = .2
   )
   
   # fit with mixedPenalty
@@ -73,33 +91,51 @@ test_that("testing mixedPenalty-basic", {
            thetas = .2) |>
     fit()
   
-  testthat::expect_equal(all(abs(rsemIsta@parameters[,rsemIsta@regularized] - mixed@parameters[,rsemIsta@regularized]) < .002), TRUE)
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
   coef(mixed, criterion = "AIC")
   coef(mixed, criterion = "BIC")
   
+  mixed <- mixedPenalty(modelFit,
+                        method = "ista",
+                        control = controlIsta()) |>
+    addLsp(regularized = regularized,
+           lambdas = lambdas,
+           thetas = .2) |>
+    fit()
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
+  
   # fit regularizedSEM
-  rsemIsta <- mcp(lavaanModel = modelFit, 
-                  regularized = regularized, 
-                  lambdas = lambdas,
-                  thetas = .2
+  rsem <- mcp(lavaanModel = modelFit, 
+              regularized = regularized, 
+              lambdas = lambdas,
+              thetas = 1.2
   )
   
   # fit with mixedPenalty
   mixed <- mixedPenalty(modelFit) |>
     addMcp(regularized = regularized,
            lambdas = lambdas,
-           thetas = .2) |>
+           thetas = 1.2) |>
     fit()
   
-  testthat::expect_equal(all(abs(rsemIsta@parameters[,rsemIsta@regularized] - mixed@parameters[,rsemIsta@regularized]) < .002), TRUE)
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
   coef(mixed, criterion = "AIC")
   coef(mixed, criterion = "BIC")
   
+  mixed <- mixedPenalty(modelFit,
+                        method = "ista",
+                        control = controlIsta()) |>
+    addMcp(regularized = regularized,
+           lambdas = lambdas,
+           thetas = 1.2) |>
+    fit()
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
+  
   # fit regularizedSEM
-  rsemIsta <- scad(lavaanModel = modelFit, 
-                   regularized = regularized, 
-                   lambdas = lambdas,
-                   thetas = 2.2
+  rsem <- scad(lavaanModel = modelFit, 
+               regularized = regularized, 
+               lambdas = lambdas,
+               thetas = 2.2
   )
   
   # fit with mixedPenalty
@@ -109,7 +145,7 @@ test_that("testing mixedPenalty-basic", {
             thetas = 2.2) |>
     fit()
   
-  testthat::expect_equal(all(abs(rsemIsta@parameters[,rsemIsta@regularized] - mixed@parameters[,rsemIsta@regularized]) < .002), TRUE)
+  testthat::expect_equal(all(abs(rsem@parameters[,rsem@regularized] - mixed@parameters[,rsem@regularized]) < .002), TRUE)
   coef(mixed, criterion = "AIC")
   coef(mixed, criterion = "BIC")
   
@@ -172,31 +208,42 @@ f ~~ 1*f
     mixedPenalty(method = "glmnet", control = controlGlmnet()) |>
     # add lasso penalty on loadings l6 - l10:
     addLasso(regularized = paste0("l", 6:10), 
-                  lambdas = seq(0,1,length.out=3)) |>
+             lambdas = seq(0,1,length.out=3)) |>
     # add penalty on loadings l11 - l15:
     addLasso(regularized = paste0("l", 11:15), 
-                  lambdas = seq(0,1,length.out=3)) |>
+             lambdas = seq(0,1,length.out=3)) |>
     fit()
   
   testthat::expect_equal(all(abs(coef(mixedPenaltyGlmnet)@estimates - coef(mixedPenaltyIsta)@estimates) < .001), TRUE)
   
-  testthat::expect_error(
-    # We can add multiple penalties as follows:
-    mixedPenaltyGlmnet <- lavaanModel |>
-      # create template for regularized model with mixed penalty:
-      mixedPenalty(method = "glmnet", control = controlGlmnet()) |>
-      # add lasso penalty on loadings l6 - l10:
-      addElasticNet(regularized = paste0("l", 6:10), 
-                    lambdas = seq(0,1,length.out=3),
-                    alphas = 1) |>
-      # add penalty on loadings l11 - l15:
-      addScad(regularized = paste0("l", 11:15), 
-               lambdas = seq(0,1,length.out=3), 
-              thetas = 2.4) |>
-      fit()
-    
-  )
+  # We can add multiple penalties as follows:
+  mixedPenaltyGlmnet <- lavaanModel |>
+    # create template for regularized model with mixed penalty:
+    mixedPenalty(method = "glmnet", control = controlGlmnet()) |>
+    # add lasso penalty on loadings l6 - l10:
+    addLasso(regularized = paste0("l", 6:10), 
+                  lambdas = seq(0,1,length.out=3)) |>
+    # add penalty on loadings l11 - l15:
+    addScad(regularized = paste0("l", 11:15), 
+            lambdas = seq(0,1,length.out=3), 
+            thetas = 2.4) |>
+    fit()
   
+  mixedPenaltyIsta <- lavaanModel |>
+    # create template for regularized model with mixed penalty:
+    mixedPenalty(method = "ista", control = controlIsta()) |>
+    # add lasso penalty on loadings l6 - l10:
+    addLasso(regularized = paste0("l", 6:10), 
+             lambdas = seq(0,1,length.out=3)) |>
+    # add penalty on loadings l11 - l15:
+    addScad(regularized = paste0("l", 11:15), 
+            lambdas = seq(0,1,length.out=3), 
+            thetas = 2.4) |>
+    fit()
+  
+  testthat::expect_equal(all(abs(mixedPenaltyGlmnet@parameters - mixedPenaltyIsta@parameters) < .001), TRUE)
+  
+
   testthat::expect_error(
     # We can add multiple penalties as follows:
     mixedPenaltyIsta <- lavaanModel |>

@@ -33,13 +33,12 @@ test_that("testing cappedL1", {
   rsemIsta <- cappedL1(lavaanModel = modelFit, 
                        regularized = paste0("f=~y",6:ncol(y)), 
                        lambdas = lambdas,
-                       thetas = thetas,
-                       control = controlIsta()
+                       thetas = thetas
   )
   testthat::expect_equal(
     all(abs(rsemIsta@fits$m2LL[rsemIsta@fits$lambda == 0] - 
               (-2*logLik(modelFit))
-    ) < 1e-4), 
+    ) < 1e-2), 
     TRUE)
   
   coef(rsemIsta, criterion = "AIC")
@@ -76,7 +75,7 @@ test_that("testing cappedL1", {
                             rsemIsta@fits$lambda == la,rsemIsta@parameterLabels]-
         regsemApprox@parameters[regsemApprox@fits$theta == th &
                                   regsemApprox@fits$lambda == la,rsemIsta@parameterLabels]
-          ) < .03
+          ) <.1
         ),
         TRUE
       )

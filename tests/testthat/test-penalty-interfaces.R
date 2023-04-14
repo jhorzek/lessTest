@@ -169,7 +169,7 @@ f ~~ 1*f
     regularized = paste0("l", 6:15),
     lambdas = seq(0,1,length.out = 5),
     thetas = seq(0.1,1,length.out = 3), 
-    control = controlIsta()) 
+    control = controlGlmnet()) 
   )
   testthat::expect_equal(is(regsem, "try-error"), FALSE)
   
@@ -180,7 +180,7 @@ f ~~ 1*f
     regularized = paste0("l", 6:15),
     lambdas = seq(0,1,length.out = 5),
     thetas = seq(0.1,1,length.out = 3), 
-    control = controlIsta())
+    control = controlGlmnet())
   )
   testthat::expect_equal(is(regsem, "try-error"), FALSE)
   
@@ -202,7 +202,7 @@ f ~~ 1*f
     regularized = paste0("l", 6:15),
     lambdas = seq(0,1,length.out = 5),
     thetas = seq(2.1,3,length.out = 3), 
-    control = controlIsta()) 
+    control = controlGlmnet()) 
   )
   testthat::expect_equal(is(regsem, "try-error"), FALSE)
 }

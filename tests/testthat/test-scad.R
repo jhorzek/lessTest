@@ -28,16 +28,33 @@ test_that("testing scad", {
   
   regularizedLavaan <- paste0("f=~y",6:ncol(y))
   
+  rsemGlmnet <- scad(lavaanModel = modelFit, 
+                   regularized = regularizedLavaan, 
+                   lambdas = lambdas, 
+                   thetas = thetas, 
+                   method = "glmnet",
+                   control = controlGlmnet()
+  )
+  coef(rsemGlmnet)
+  coef(rsemGlmnet, criterion = "AIC")
+  coef(rsemGlmnet, criterion = "BIC")
+  
   rsemIsta <- scad(lavaanModel = modelFit, 
                    regularized = regularizedLavaan, 
                    lambdas = lambdas, 
                    thetas = thetas, 
+                   method = "ista",
                    control = controlIsta()
   )
   
   coef(rsemIsta)
   coef(rsemIsta, criterion = "AIC")
   coef(rsemIsta, criterion = "BIC")
+  
+  testthat::expect_equal(
+    all(round(rsemIsta@fits$regM2LL -
+                rsemGlmnet@fits$regM2LL
+              ,3)==0),TRUE)
   
   testthat::expect_equal(
     all(round(rsemIsta@fits$m2LL[rsemIsta@fits$lambda == 0] -

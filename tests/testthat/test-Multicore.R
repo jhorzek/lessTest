@@ -56,19 +56,20 @@ f ~~ 1*f
   testthat::expect_equal(all(abs(regsem1@parameters - regsem2@parameters) < 1e-8), TRUE)
   
   # scad
-  # Note: The update order is not random -> no need to reset the seed
+  set.seed(123)
   regsem1 <- scad(
     lavaanModel = lavaanModel,
     regularized = paste0("l", 6:15),
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
-    control = controlIsta(nCores = 1))
+    control = controlGlmnet(nCores = 1))
+  set.seed(123)
   regsem2 <- scad(
     lavaanModel = lavaanModel,
     regularized = paste0("l", 6:15),
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
-    control = controlIsta(nCores = 2))
+    control = controlGlmnet(nCores = 2))
   
   testthat::expect_equal(all(abs(regsem1@parameters - regsem2@parameters) < 1e-8), TRUE)
   
@@ -121,7 +122,7 @@ f ~~ 1*f
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
     returnSubsetParameters = TRUE,
-    control = controlIsta(nCores = 1))
+    control = controlGlmnet(nCores = 1))
   set.seed(123)
   regsem2 <- cvScad(
     lavaanModel = lavaanModel,
@@ -129,7 +130,7 @@ f ~~ 1*f
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
     returnSubsetParameters = TRUE,
-    control = controlIsta(nCores = 2))
+    control = controlGlmnet(nCores = 2))
   
   testthat::expect_equal(all(abs(regsem1@subsetParameters - regsem2@subsetParameters) < 1e-8), TRUE)
   
@@ -202,19 +203,20 @@ f ~~ 1*f
   testthat::expect_equal(all(abs(regsem1@parameters - regsem2@parameters) < 1e-8), TRUE)
   
   # scad
-  # Note: The update order is not random -> no need to reset the seed
+  set.seed(123)
   regsem1 <- scad(
     lavaanModel = lavaanModel,
     regularized = regularized,
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
-    control = controlIsta(nCores = 1))
+    control = controlGlmnet(nCores = 1))
+  set.seed(123)
   regsem2 <- scad(
     lavaanModel = lavaanModel,
     regularized = regularized,
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
-    control = controlIsta(nCores = 2))
+    control = controlGlmnet(nCores = 2))
   
   testthat::expect_equal(all(abs(regsem1@parameters - regsem2@parameters) < 1e-8), TRUE)
   
@@ -293,20 +295,21 @@ f ~~ 1*f
   testthat::expect_equal(all(abs(regsem1@parameters - regsem2@parameters) < 1e-8), TRUE)
   
   # scad
-  # Note: The update order is not random -> no need to reset the seed
+  set.seed(123)
   regsem1 <- scad(
     lavaanModel = lavaanModel,
     regularized = regularized,
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
-    control = controlIsta(nCores = 1),
+    control = controlGlmnet(nCores = 1),
     modifyModel = modifyModel(transformations = transformation))
+  set.seed(123)
   regsem2 <- scad(
     lavaanModel = lavaanModel,
     regularized = regularized,
     lambdas = seq(0,.3,length.out = 3),
     thetas = c(2.1,2.7,3.5),
-    control = controlIsta(nCores = 2),
+    control = controlGlmnet(nCores = 2),
     modifyModel = modifyModel(transformations = transformation))
   
   testthat::expect_equal(all(abs(regsem1@parameters - regsem2@parameters) < 1e-8), TRUE)

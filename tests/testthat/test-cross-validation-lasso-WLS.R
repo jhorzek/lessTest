@@ -89,14 +89,12 @@ test_that("WLS: testing cross-validation for lasso", {
     modelFitTrain = sem(modelSyntax, 
                         ySorted[!testSet,], 
                         meanstructure = TRUE, 
-                        estimator = estimators[i],
-                        do.fit = FALSE)
+                        estimator = estimators[i])
     subsetPars <- pars[pars$trainSet == pars$trainSet[ro],]
     
     subsetLasso <- lasso(lavaanModel = modelFitTrain, 
                          regularized = regularizedLavaan,
-                         lambdas = lambdas,
-                         control = controlGlmnet(breakOuter = 1e-10))
+                         lambdas = lambdas)
     
     testthat::expect_equal(all(abs(subsetLasso@parameters - subsetPars[,colnames(subsetLasso@parameters)])< 1e-2), TRUE)
     

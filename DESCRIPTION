@@ -27,6 +27,8 @@ Imports:
     mvtnorm,
     Matrix,
     OpenMx,
-    ctsemOMX
+    ctsemOMX,
+    Rcpp,
+    RcppArmadillo
 URL: https://github.com/jhorzek/lessTest
 BugReports: https://github.com/jhorzek/lessTest/issues

@@ -120,7 +120,7 @@ opt <- optim(par = parameters,
 fitfunction(opt$par, data) +
   ridgePen@fits$lambda[3] * sum(opt$par[2:length(opt$par)]^2) -
 opt$value
-ridgePen@fits$regM2LL[3] - opt$value
+ridgePen@fits$regObjectiveValue[3] - opt$value
 
 testthat::expect_equal(
   all(round(opt$par - 

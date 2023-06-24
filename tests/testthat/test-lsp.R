@@ -29,8 +29,7 @@ test_that("testing lsp", {
   rsemIsta <- lsp(lavaanModel = modelFit, 
                   regularized = paste0("f=~y",6:ncol(y)), 
                   lambdas = lambdas,
-                  thetas = thetas,
-                  control = controlIsta()
+                  thetas = thetas
   )
   
   testthat::expect_equal(

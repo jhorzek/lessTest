@@ -111,7 +111,7 @@ test_that("testing general purpose optimization with gr", {
   testthat::expect_equal(all(abs(t(lassoPen@parameters[,lassoPen@parameterLabels]) -
                                    coef(out)) <.0001), TRUE)
   
-  testthat::expect_equal(all(abs(lassoPen@fits$regM2LL-
+  testthat::expect_equal(all(abs(lassoPen@fits$regObjectiveValue-
                                    penSse) <.0001), TRUE)
   
   

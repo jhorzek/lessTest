@@ -105,4 +105,19 @@ f ~~ 1*f
   coef(lsem, criterion = "AIC")
   # or
   estimates(lsem, criterion = "AIC") 
+  
+  # Regularization:
+  lsem <- cvLasso(
+    # pass the fitted lavaan model
+    lavaanModel = lavaanModel,
+    # names of the regularized parameters:
+    regularized = paste0("l", 6:15),
+    # in case of lasso and adaptive lasso, we can specify the number of lambda
+    # values to use. lessSEM will automatically find lambda_max and fit
+    # models for nLambda values between 0 and lambda_max. For the other
+    # penalty functions, lambdas must be specified explicitly
+    lambdas = seq(0,1,.1))
+  
+  coef(lsem)
+  estimates(lsem)
 })

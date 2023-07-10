@@ -9,10 +9,11 @@ test_that("missing data works", {
                                  percentMissing = 20)
   
   # testing some extreme missingness patterns
-  dataset[1,] <- NA
-  dataset[2,] <- NA
+ 
   dataset[3,-1] <- NA
   dataset[4,-2] <- NA
+  dataset[1,] <- NA
+  dataset[2,] <- NA
   
   lavaanSyntax <- "
 f =~ l1*y1 + l2*y2 + l3*y3 + l4*y4 + l5*y5 + 
@@ -120,4 +121,7 @@ f ~~ 1*f
   
   coef(lsem)
   estimates(lsem)
+  
+  testthat::expect_true(!anyNA(lsem@cvfits))
+  
 })

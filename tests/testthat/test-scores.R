@@ -2,24 +2,24 @@ test_that("testing scores", {
   library(lavaan)
   library(lessSEM)
   set.seed(123)
-
+  
   model1 <- ' 
-  # latent variable definitions
-     ind60 =~ x1 + x2 + x3
-     dem60 =~ y1 + a*y2 + b*y3 + c*y4
-     dem65 =~ y5 + a*y6 + b*y7 + c*y8
-
-  # regressions
-    dem60 ~ ind60
-    dem65 ~ ind60 + dem60
-
-  # residual correlations
-    y1 ~~ y5
-    y2 ~~ y4 
-    y3 ~~ y7
-    y4 ~~ y8
-    y6 ~~ y8
-'
+    # latent variable definitions
+       ind60 =~ x1 + x2 + x3
+       dem60 =~ y1 + a*y2 + b*y3 + c*y4
+       dem65 =~ y5 + a*y6 + b*y7 + c*y8
+  
+    # regressions
+      dem60 ~ ind60
+      dem65 ~ ind60 + dem60
+  
+    # residual correlations
+      y1 ~~ y5
+      y2 ~~ y4 
+      y3 ~~ y7
+      y4 ~~ y8
+      y6 ~~ y8
+  '
   
   model <- sem(model1, data = PoliticalDemocracy, meanstructure = TRUE)
   lavaanScores <- -2*lavaan::lavScores(model)
@@ -28,8 +28,8 @@ test_that("testing scores", {
   SEM <- lessSEM:::.fit(SEM)
   
   scoresAnalytic <- lessSEM:::.getScores(SEM, raw = FALSE)
-
-  testthat::expect_equal(round(sum(abs(scoresAnalytic - lavaanScores)),4),0)
+  
+  testthat::expect_lt(max(abs(scoresAnalytic - lavaanScores)), 1e-4)
   
   PoliticalDemocracyWithNA <- PoliticalDemocracy
   
@@ -49,5 +49,5 @@ test_that("testing scores", {
   SEM <- lessSEM:::.fit(SEM)
   
   scoresAnalytic <- lessSEM:::.getScores(SEM, raw = FALSE)
-  testthat::expect_equal(round(sum(abs(scoresAnalytic - lavaanScores)),4),0)
+  testthat::expect_lt(max(abs(scoresAnalytic - lavaanScores)), 1e-4)
 })

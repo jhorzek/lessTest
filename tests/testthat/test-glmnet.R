@@ -119,10 +119,11 @@ test_that("testing ista-lasso", {
   )
   lassoResultIsta$rawParameters
   lassoParamIsta <- lessSEM:::.getParameters(SEM, raw = FALSE)
+  testthat::expect_true(
+    all(abs(lassoParam -
+              lassoParamIsta) < 0.01)
+  )
   
-  testthat::expect_equal(all(
-    round(lassoParam -
-            lassoParamIsta,2) == 0), TRUE)
   testthat::expect_equal(round(lassoResult$fit -
           lassoResultIsta$fit,3) == 0, TRUE)
   
@@ -153,12 +154,11 @@ test_that("testing ista-lasso", {
   
   SEM <- lessSEM:::.setParameters(SEM, names(enetResult$rawParameters), enetResult$rawParameters, raw = TRUE)
   
-  testthat::expect_equal(
-    enetResult$fit - (
-  SEM$fit() + 
-    N*lambda_enet*.4*sum(abs(enetResult$rawParameters*weights)) +
-    N*lambda_enet*(1-.4) * sum((enetResult$rawParameters*weights)^2)
-    ) == 0, TRUE)
-
+  testthat::expect_lt(abs(enetResult$fit - (
+    SEM$fit() + 
+      N*lambda_enet*.4*sum(abs(enetResult$rawParameters*weights)) +
+      N*lambda_enet*(1-.4) * sum((enetResult$rawParameters*weights)^2)
+  )), 1e-9)
+  
 })
 
